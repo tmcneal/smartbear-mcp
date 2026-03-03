@@ -29,7 +29,7 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction)
 See individual guides for suggested prompts and supported tools and resources:
 
 - [BugSnag](https://developer.smartbear.com/smartbear-mcp/docs/bugsnag-integration) - Comprehensive error monitoring and debugging capabilities
-- [Test Hub](https://developer.smartbear.com/smartbear-mcp/docs/test-hub-integration) - Test management and execution capabilities
+- [Reflect](https://developer.smartbear.com/smartbear-mcp/docs/reflect-integration) - Test management and execution capabilities
 - **Swagger**
   - [Portal](https://developer.smartbear.com/smartbear-mcp/docs/swagger-portal-integration) - Portal and product management capabilities
   - [Studio](https://developer.smartbear.com/smartbear-mcp/docs/swagger-studio-integration) - API and Domain management capabilities, including AI-powered API generation from prompts and automatic standardization
@@ -37,7 +37,6 @@ See individual guides for suggested prompts and supported tools and resources:
 - [QMetry](https://developer.smartbear.com/smartbear-mcp/docs/qmetry-integration) - QMetry Test Management capabilities
 - [Zephyr](https://developer.smartbear.com/smartbear-mcp/docs/zephyr-integration) - Zephyr Test Management capabilities
 - [Collaborator](https://developer.smartbear.com/smartbear-mcp/docs/collaborator-integration) - Review and Remote System Configuration management capabilities
-
 
 ## Prerequisites
 
@@ -66,10 +65,7 @@ Alternatively, you can use `npx` (or globally install) the `@smartbear/mcp` pack
     "smartbear": {
       "type": "stdio",
       "command": "npx",
-      "args": [
-        "-y",
-        "@smartbear/mcp@latest"
-      ],
+      "args": ["-y", "@smartbear/mcp@latest"],
       "env": {
         "BUGSNAG_AUTH_TOKEN": "${input:bugsnag_auth_token}",
         "BUGSNAG_PROJECT_API_KEY": "${input:bugsnag_project_api_key}",
@@ -93,117 +89,118 @@ Alternatively, you can use `npx` (or globally install) the `@smartbear/mcp` pack
     }
   },
   "inputs": [
-      {
-         "id": "bugsnag_auth_token",
-         "type": "promptString",
-         "description": "BugSnag Auth Token - leave blank to disable BugSnag tools",
-         "password": true
-      },
-      {
-         "id": "bugsnag_project_api_key",
-         "type": "promptString",
-         "description": "BugSnag Project API Key - for single project interactions",
-         "password": false
-      },
-      {
-         "id": "reflect_api_token",
-         "type": "promptString",
-         "description": "Reflect API Token - leave blank to disable Reflect tools",
-         "password": true
-      },
-      {
-         "id": "swagger_api_key",
-         "type": "promptString",
-         "description": "Swagger API Key - leave blank to disable Swagger tools",
-         "password": true
-      },
-      {
-         "id": "swagger_portal_base_path",
-         "type": "promptString",
-         "description": "Swagger Portal API base path - only needed for on-premise installations (leave blank for cloud)",
-         "password": false
-      },
-      {
-         "id": "swagger_registry_base_path",
-         "type": "promptString",
-         "description": "Swagger Registry API base path - only needed for on-premise installations (leave blank for cloud)",
-         "password": false
-      },
-      {
-         "id": "swagger_ui_base_path",
-         "type": "promptString",
-         "description": "Swagger UI base path - only needed for on-premise installations (leave blank for cloud)",
-         "password": false
-      },
-      {
-         "id": "pact_broker_base_url",
-         "type": "promptString",
-         "description": "PactFlow or Pact Broker base url - leave blank to disable the tools",
-         "password": true
-      },
-      {
-         "id": "pact_broker_token",
-         "type": "promptString",
-         "description": "PactFlow Authentication Token",
-         "password": true
-      },
-      {
-         "id": "pact_broker_username",
-         "type": "promptString",
-         "description": "Pact Broker Username",
-         "password": true
-      },
-      {
-         "id": "pact_broker_password",
-         "type": "promptString",
-         "description": "Pact Broker Password",
-         "password": true
-      },
-      {
-          "id": "qmetry_api_key",
-          "type": "promptString",
-          "description": "QMetry Open API Key",
-          "password": true
-      },
-      {
-          "id": "qmetry_base_url",
-          "type": "promptString",
-          "description": "By default, connects to https://testmanagement.qmetry.com. Change to a custom QMetry server URL or a region-specific endpoint if needed.",
-          "password": false
-      },
-      {
-          "id": "zephyr_api_token",
-          "type": "promptString",
-          "description": "Zephyr API token - leave blank to disable Zephyr tools",
-          "password": true
-      },
-      {
-          "id": "zephyr_base_url",
-          "type": "promptString",
-          "description": "Zephyr API base URL. By default, connects to https://api.zephyrscale.smartbear.com/v2. Change to region-specific endpoint if needed.",
-          "password": false
-      },
-      {
-          "id": "collab_base_url",
-          "type": "promptString",
-          "description": "Collab base url",
-          "password": true
-      },
-      {
-          "id": "collab_username",
-          "type": "promptString",
-          "description": "Collab username",
-          "password": true
-      },
-      {
-          "id": "collab_login_ticket",
-          "type": "promptString",
-          "description": "Collab login ticket",
-          "password": true
-      }
+    {
+      "id": "bugsnag_auth_token",
+      "type": "promptString",
+      "description": "BugSnag Auth Token - leave blank to disable BugSnag tools",
+      "password": true
+    },
+    {
+      "id": "bugsnag_project_api_key",
+      "type": "promptString",
+      "description": "BugSnag Project API Key - for single project interactions",
+      "password": false
+    },
+    {
+      "id": "reflect_api_token",
+      "type": "promptString",
+      "description": "Reflect API Token - leave blank to disable Reflect tools",
+      "password": true
+    },
+    {
+      "id": "swagger_api_key",
+      "type": "promptString",
+      "description": "Swagger API Key - leave blank to disable Swagger tools",
+      "password": true
+    },
+    {
+      "id": "swagger_portal_base_path",
+      "type": "promptString",
+      "description": "Swagger Portal API base path - only needed for on-premise installations (leave blank for cloud)",
+      "password": false
+    },
+    {
+      "id": "swagger_registry_base_path",
+      "type": "promptString",
+      "description": "Swagger Registry API base path - only needed for on-premise installations (leave blank for cloud)",
+      "password": false
+    },
+    {
+      "id": "swagger_ui_base_path",
+      "type": "promptString",
+      "description": "Swagger UI base path - only needed for on-premise installations (leave blank for cloud)",
+      "password": false
+    },
+    {
+      "id": "pact_broker_base_url",
+      "type": "promptString",
+      "description": "PactFlow or Pact Broker base url - leave blank to disable the tools",
+      "password": true
+    },
+    {
+      "id": "pact_broker_token",
+      "type": "promptString",
+      "description": "PactFlow Authentication Token",
+      "password": true
+    },
+    {
+      "id": "pact_broker_username",
+      "type": "promptString",
+      "description": "Pact Broker Username",
+      "password": true
+    },
+    {
+      "id": "pact_broker_password",
+      "type": "promptString",
+      "description": "Pact Broker Password",
+      "password": true
+    },
+    {
+      "id": "qmetry_api_key",
+      "type": "promptString",
+      "description": "QMetry Open API Key",
+      "password": true
+    },
+    {
+      "id": "qmetry_base_url",
+      "type": "promptString",
+      "description": "By default, connects to https://testmanagement.qmetry.com. Change to a custom QMetry server URL or a region-specific endpoint if needed.",
+      "password": false
+    },
+    {
+      "id": "zephyr_api_token",
+      "type": "promptString",
+      "description": "Zephyr API token - leave blank to disable Zephyr tools",
+      "password": true
+    },
+    {
+      "id": "zephyr_base_url",
+      "type": "promptString",
+      "description": "Zephyr API base URL. By default, connects to https://api.zephyrscale.smartbear.com/v2. Change to region-specific endpoint if needed.",
+      "password": false
+    },
+    {
+      "id": "collab_base_url",
+      "type": "promptString",
+      "description": "Collab base url",
+      "password": true
+    },
+    {
+      "id": "collab_username",
+      "type": "promptString",
+      "description": "Collab username",
+      "password": true
+    },
+    {
+      "id": "collab_login_ticket",
+      "type": "promptString",
+      "description": "Collab login ticket",
+      "password": true
+    }
   ]
 }
 ```
+
 </details>
 
 ### Claude Desktop
@@ -215,10 +212,7 @@ Add the following configuration to your `claude_desktop_config.json` to launch t
   "mcpServers": {
     "smartbear": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@smartbear/mcp@latest"
-      ],
+      "args": ["-y", "@smartbear/mcp@latest"],
       "env": {
         "BUGSNAG_AUTH_TOKEN": "your_personal_auth_token",
         "BUGSNAG_PROJECT_API_KEY": "your_project_api_key",
@@ -258,9 +252,8 @@ This MCP server is licensed under the MIT License. This means you are free to us
 
 ## Support
 
-* [Search open and closed issues](https://github.com/SmartBear/smartbear-mcp/issues?utf8=✓&q=is%3Aissue) for similar problems
-* [Report a bug or request a feature](https://github.com/SmartBear/smartbear-mcp/issues/new)
-
+- [Search open and closed issues](https://github.com/SmartBear/smartbear-mcp/issues?utf8=✓&q=is%3Aissue) for similar problems
+- [Report a bug or request a feature](https://github.com/SmartBear/smartbear-mcp/issues/new)
 
 ---
 

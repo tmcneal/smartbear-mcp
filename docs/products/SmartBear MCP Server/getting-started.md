@@ -6,9 +6,9 @@ This guide is to help you get up and running with our MCP server.
 
 Before setting up and using the SmartBear MCP Server, ensure you have: 
 
--   An active account across our relevant hubs (e.g. [Swagger](https://try.platform.smartbear.com/?product=ApiHub), [Test Hub](https://app.reflect.run/registration), [QMetry](https://testmanagement.qmetry.com), and/or [BugSnag](https://app.bugsnag.com/user/new)) with valid API credentials.
--   Node.js 20 or later installed on your development machine
--   A compatible MCP client (Claude Desktop, Cursor, etc.)
+- An active account across our relevant hubs (e.g. [Swagger](https://try.platform.smartbear.com/?product=ApiHub), [Reflect](https://app.reflect.run/registration), [QMetry](https://testmanagement.qmetry.com), and/or [BugSnag](https://app.bugsnag.com/user/new)) with valid API credentials.
+- Node.js 20 or later installed on your development machine
+- A compatible MCP client (Claude Desktop, Cursor, etc.)
 
 ### Installing the Server
 
@@ -48,7 +48,7 @@ The SmartBear MCP Server supports multiple SmartBear Hubs, each requiring its ow
 
   Copy the relevant API tokens from [`app.pactflow.io`](https://app.pactflow.io/settings/api-tokens). You will also need to note the tenant URL for your organization (e.g., `{tenant}.pactflow.io`). The MCP server also supports the open source Pact Broker, in which case you will need a username and password instead of a token.
 
-- **Test Hub (Reflect)**
+- **Reflect**
 
   Generate an API key from your dashboard at [`app.reflect.run`](https://app.reflect.run/settings/account).
 
@@ -337,9 +337,9 @@ You'll have access to all SmartBear tools within your Claude Code sessions.
 
 The SmartBear MCP Server follows standard MCP protocols and should work with any client that supports:
 
--   STDIO transport mode
--   Environment variable configuration
--   Standard MCP tool calling conventions
+- STDIO transport mode
+- Environment variable configuration
+- Standard MCP tool calling conventions
 
 ### Building the Server
 
@@ -486,61 +486,61 @@ Once configured, you can interact with SmartBear tools through natural language 
 
 ### BugSnag Error Investigation
 
--   "Help me fix this crash from BugSnag: https://app.bugsnag.com/my-org/my-project/errors/1a2b3c4d5e6f7g8h9i0j1k2l?&event_id=1a2b3c4d5e6f7g8h9i0j1k2l"
--   "What are my top events for the 'example' project in BugSnag?"
--   "Show me the latest occurrence of error ID abc123 in project xyz789"
--   "List all projects in my organization so I can investigate errors"
--   "Get details about the most recent event for this specific error"
+- "Help me fix this crash from BugSnag: https://app.bugsnag.com/my-org/my-project/errors/1a2b3c4d5e6f7g8h9i0j1k2l?&event_id=1a2b3c4d5e6f7g8h9i0j1k2l"
+- "What are my top events for the 'example' project in BugSnag?"
+- "Show me the latest occurrence of error ID abc123 in project xyz789"
+- "List all projects in my organization so I can investigate errors"
+- "Get details about the most recent event for this specific error"
 
 ### Event Analysis and Debugging
 
--   "Analyze this specific event ID and help me understand the root cause"
--   "What context information is available for this error occurrence?"
--   "Show me the complete stack trace and user data for this event"
--   "Help me understand the breadcrumbs leading to this crash"
+- "Analyze this specific event ID and help me understand the root cause"
+- "What context information is available for this error occurrence?"
+- "Show me the complete stack trace and user data for this event"
+- "Help me understand the breadcrumbs leading to this crash"
 
 ### Cross-platform Debugging Workflows
 
--   "Compare this BugSnag error with similar issues in our codebase"
--   "Generate a debugging checklist based on this error's characteristics"
--   "What patterns do you see in the user context and device information?"
--   "Help me create a reproduction scenario based on this event data"
+- "Compare this BugSnag error with similar issues in our codebase"
+- "Generate a debugging checklist based on this error's characteristics"
+- "What patterns do you see in the user context and device information?"
+- "Help me create a reproduction scenario based on this event data"
 
 ### Organization and Project Management
 
--   "What organizations do I have access to in BugSnag?"
--   "List all projects in organization org_12345"
--   "Show me project details for the mobile app project"
+- "What organizations do I have access to in BugSnag?"
+- "List all projects in organization org_12345"
+- "Show me project details for the mobile app project"
 
 ### Swagger Contract Testing (PactFlow)
 
--   "List all the provider states for the current provider"
--   "Generate Pact tests from this OpenAPI spec: [spec link]"
--   "Review this Pact test and suggest improvements"
+- "List all the provider states for the current provider"
+- "Generate Pact tests from this OpenAPI spec: [spec link]"
+- "Review this Pact test and suggest improvements"
 
 ### QMetry Test Management
 
--   "Set current QMetry project for your account"
--   "Get current QMetry project for your account"
--   "Get QMetry releases and cycles from your account."
--   "Get QMetry builds from the current project."
--   "Get QMetry platforms from the current project."
--   "List all QMetry requirements for your account."
--   "Get the QMetry requirement details."
--   "List all QMetry Test Cases for your account."
--   "Get the QMetry Test Case details."
--   "Get the QMetry Test Case detail for specific version."
--   "Get the QMetry Test Case steps."
--   "Get test cases that are linked to a specific requirement."
--   "Get requirements that are linked to a specific test case."
--   "Get execution records for a specific test case by ID."
--   "Get test suites that can be linked to test cases in QMetry."
--   "Get executions for a given test suite in QMetry."
--   "Get test case runs under a specific test suite run execution in QMetry."
--   "Get issues that are linked to a specific test case run in QMetry."
+- "Set current QMetry project for your account"
+- "Get current QMetry project for your account"
+- "Get QMetry releases and cycles from your account."
+- "Get QMetry builds from the current project."
+- "Get QMetry platforms from the current project."
+- "List all QMetry requirements for your account."
+- "Get the QMetry requirement details."
+- "List all QMetry Test Cases for your account."
+- "Get the QMetry Test Case details."
+- "Get the QMetry Test Case detail for specific version."
+- "Get the QMetry Test Case steps."
+- "Get test cases that are linked to a specific requirement."
+- "Get requirements that are linked to a specific test case."
+- "Get execution records for a specific test case by ID."
+- "Get test suites that can be linked to test cases in QMetry."
+- "Get executions for a given test suite in QMetry."
+- "Get test case runs under a specific test suite run execution in QMetry."
+- "Get issues that are linked to a specific test case run in QMetry."
 
 ### Zephyr Test Management
 
--   "List all projects where Zephyr is enabled"
--   "Get Zephyr test cases from the project with key TEST"
--   "Get the last executions from the Zephyr Test Cycle TEST-R1"
+- "List all projects where Zephyr is enabled"
+- "Get Zephyr test cases from the project with key TEST"
+- "Get the last executions from the Zephyr Test Cycle TEST-R1"
