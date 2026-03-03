@@ -38,6 +38,7 @@ export class SmartBearMcpServer extends McpServer {
   private cache: CacheService;
   private samplingSupported = false;
   private elicitationSupported = false;
+  private clients: Client[] = [];
 
   constructor() {
     super(
@@ -77,7 +78,14 @@ export class SmartBearMcpServer extends McpServer {
     return this.elicitationSupported;
   }
 
+  async cleanupSession(mcpSessionId: string): Promise<void> {
+    for (const client of this.clients) {
+      await client.cleanupSession?.(mcpSessionId);
+    }
+  }
+
   async addClient(client: Client): Promise<void> {
+    this.clients.push(client);
     await client.registerTools(
       (params, cb) => {
         const toolName = `${client.toolPrefix}_${params.title.replace(/\s+/g, "_").toLowerCase()}`;
