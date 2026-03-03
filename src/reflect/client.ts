@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { MCP_SERVER_NAME, MCP_SERVER_VERSION } from "../common/info";
+import { ToolError } from "../common/tools";
 import type { SmartBearMcpServer } from "../common/server";
 import { ToolError } from "../common/tools";
 import type {
@@ -8,6 +9,15 @@ import type {
   GetInputFunction,
   RegisterToolsFunction,
 } from "../common/types";
+import type { WebSocketManager } from "./websocket-manager";
+import type { TestPlatform } from "./types/common";
+import { API_KEY_HEADER, API_HOSTNAME } from "./config/constants";
+import { AddPromptStep } from "./tool/recording/add-prompt-step";
+import { AddSegment } from "./tool/recording/add-segment";
+import { ConnectToSession } from "./tool/recording/connect-to-session";
+import { DeletePreviousStep } from "./tool/recording/delete-previous-step";
+import { GetScreenshot } from "./tool/recording/get-screenshot";
+import { ListSegments } from "./tool/tests/list-segments";
 
 // Type definitions for tool arguments
 export interface suiteArgs {
@@ -35,6 +45,9 @@ const ConfigurationSchema = z.object({
 // ReflectClient class implementing the Client interface
 export class ReflectClient implements Client {
   private headers = {};
+  private apiToken = "";
+  private activeConnections = new Map<string, WebSocketManager>();
+  private sessionStates = new Map<string, { platform: TestPlatform }>();
 
   name = "Reflect";
   toolPrefix = "reflect";
@@ -47,8 +60,9 @@ export class ReflectClient implements Client {
     config: z.infer<typeof ConfigurationSchema>,
     _cache?: any,
   ): Promise<void> {
+    this.apiToken = config.api_token;
     this.headers = {
-      "X-API-KEY": `${config.api_token}`,
+      [API_KEY_HEADER]: `${config.api_token}`,
       "Content-Type": "application/json",
       "User-Agent": `${MCP_SERVER_NAME}/${MCP_SERVER_VERSION}`,
     };
@@ -58,8 +72,39 @@ export class ReflectClient implements Client {
     return Object.keys(this.headers).length !== 0;
   }
 
+  getApiToken(): string {
+    return this.apiToken;
+  }
+
+  getSessionState(sessionId: string): { platform: TestPlatform } | undefined {
+    return this.sessionStates.get(sessionId);
+  }
+
+  isSessionConnected(sessionId: string): boolean {
+    const wsManager = this.activeConnections.get(sessionId);
+    return wsManager?.isConnected() ?? false;
+  }
+
+  getConnectedSession(sessionId: string): WebSocketManager {
+    if (!this.isSessionConnected(sessionId)) {
+      throw new ToolError(
+        `Session ${sessionId} is not connected. Call connect_to_session first.`,
+      );
+    }
+    return this.activeConnections.get(sessionId) as WebSocketManager;
+  }
+
+  registerConnection(
+    sessionId: string,
+    ws: WebSocketManager,
+    state: { platform: TestPlatform },
+  ): void {
+    this.activeConnections.set(sessionId, ws);
+    this.sessionStates.set(sessionId, state);
+  }
+
   async listReflectSuites(): Promise<any> {
-    const response = await fetch("https://api.reflect.run/v1/suites", {
+    const response = await fetch(`https://${API_HOSTNAME}/v1/suites`, {
       method: "GET",
       headers: this.headers,
     });
@@ -69,7 +114,7 @@ export class ReflectClient implements Client {
 
   async listSuiteExecutions(suiteId: string): Promise<any> {
     const response = await fetch(
-      `https://api.reflect.run/v1/suites/${suiteId}/executions`,
+      `https://${API_HOSTNAME}/v1/suites/${suiteId}/executions`,
       {
         method: "GET",
         headers: this.headers,
@@ -84,7 +129,7 @@ export class ReflectClient implements Client {
     executionId: string,
   ): Promise<any> {
     const response = await fetch(
-      `https://api.reflect.run/v1/suites/${suiteId}/executions/${executionId}`,
+      `https://${API_HOSTNAME}/v1/suites/${suiteId}/executions/${executionId}`,
       {
         method: "GET",
         headers: this.headers,
@@ -96,7 +141,7 @@ export class ReflectClient implements Client {
 
   async executeSuite(suiteId: string): Promise<any> {
     const response = await fetch(
-      `https://api.reflect.run/v1/suites/${suiteId}/executions`,
+      `https://${API_HOSTNAME}/v1/suites/${suiteId}/executions`,
       {
         method: "POST",
         headers: this.headers,
@@ -111,7 +156,7 @@ export class ReflectClient implements Client {
     executionId: string,
   ): Promise<any> {
     const response = await fetch(
-      `https://api.reflect.run/v1/suites/${suiteId}/executions/${executionId}/cancel`,
+      `https://${API_HOSTNAME}/v1/suites/${suiteId}/executions/${executionId}/cancel`,
       {
         method: "PATCH",
         headers: this.headers,
@@ -122,7 +167,7 @@ export class ReflectClient implements Client {
   }
 
   async listReflectTests(): Promise<any> {
-    const response = await fetch("https://api.reflect.run/v1/tests", {
+    const response = await fetch(`https://${API_HOSTNAME}/v1/tests`, {
       method: "GET",
       headers: this.headers,
     });
@@ -132,7 +177,7 @@ export class ReflectClient implements Client {
 
   async runReflectTest(testId: string): Promise<any> {
     const response = await fetch(
-      `https://api.reflect.run/v1/tests/${testId}/executions`,
+      `https://${API_HOSTNAME}/v1/tests/${testId}/executions`,
       {
         method: "POST",
         headers: this.headers,
@@ -147,7 +192,7 @@ export class ReflectClient implements Client {
     executionId: string,
   ): Promise<any> {
     const response = await fetch(
-      `https://api.reflect.run/v1/executions/${executionId}`,
+      `https://${API_HOSTNAME}/v1/executions/${executionId}`,
       {
         method: "GET",
         headers: this.headers,
@@ -349,5 +394,18 @@ export class ReflectClient implements Client {
         };
       },
     );
+
+    const recordingTools = [
+      new ConnectToSession(this),
+      new AddPromptStep(this),
+      new GetScreenshot(this),
+      new DeletePreviousStep(this),
+      new AddSegment(this),
+      new ListSegments(this),
+    ];
+
+    for (const tool of recordingTools) {
+      register(tool.specification, tool.handle);
+    }
   }
 }
