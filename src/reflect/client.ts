@@ -6,10 +6,8 @@ import type { SmartBearMcpServer } from "../common/server";
 import type {
   Client,
   GetInputFunction,
-  RegisterPromptFunction,
   RegisterToolsFunction,
 } from "../common/types";
-import { PROMPTS } from "./prompts";
 import type { WebSocketManager } from "./websocket-manager";
 import type { TestPlatform } from "./types/common";
 import { API_KEY_HEADER } from "./config/constants";
@@ -95,12 +93,6 @@ export class ReflectClient implements Client {
   ): void {
     this.activeConnections.set(sessionId, ws);
     this.sessionStates.set(sessionId, state);
-  }
-
-  registerPrompts(register: RegisterPromptFunction): void {
-    for (const prompt of PROMPTS) {
-      register(prompt.name, prompt.params, prompt.callback);
-    }
   }
 
   async registerTools(

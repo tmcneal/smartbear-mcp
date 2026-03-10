@@ -46,6 +46,7 @@ export interface MCPConnectToSessionSuccessResponse {
   type: "mcp:connect-to-session:success";
   id: string;
   platform: TestPlatform;
+  name: string;
 }
 
 export interface MCPAddPromptStepSuccessResponse {
@@ -119,4 +120,3 @@ export type MCPFailureResponse =
   | MCPAddSegmentFailureResponse
   | MCPDeleteStepFailureResponse
   | MCPGetScreenshotFailureResponse;
-
