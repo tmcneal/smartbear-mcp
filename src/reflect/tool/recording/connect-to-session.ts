@@ -4,9 +4,9 @@ import type { ZodRawShape } from "zod";
 import { z } from "zod";
 import { Tool, ToolError } from "../../../common/tools";
 import type { ToolParams } from "../../../common/types";
-import { WebSocketManager } from "../../websocket-manager";
 import type { ReflectClient } from "../../client";
 import type { MCPConnectToSessionSuccessResponse } from "../../types/mcp";
+import { WebSocketManager } from "../../websocket-manager";
 
 export class ConnectToSession extends Tool<ReflectClient> {
   specification: ToolParams = {

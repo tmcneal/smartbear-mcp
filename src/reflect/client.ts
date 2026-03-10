@@ -1,30 +1,32 @@
 import { z } from "zod";
 
 import { MCP_SERVER_NAME, MCP_SERVER_VERSION } from "../common/info";
-import { ToolError } from "../common/tools";
 import type { SmartBearMcpServer } from "../common/server";
+import { ToolError } from "../common/tools";
 import type {
   Client,
   GetInputFunction,
+  RegisterPromptFunction,
   RegisterToolsFunction,
 } from "../common/types";
 import { API_KEY_HEADER } from "./config/constants";
+import { SapTest } from "./prompt/sap-test";
+import { AddPromptStep } from "./tool/recording/add-prompt-step";
+import { AddSegment } from "./tool/recording/add-segment";
+import { ConnectToSession } from "./tool/recording/connect-to-session";
+import { DeletePreviousStep } from "./tool/recording/delete-previous-step";
+import { GetScreenshot } from "./tool/recording/get-screenshot";
 import { CancelSuiteExecution } from "./tool/suites/cancel-suite-execution";
 import { ExecuteSuite } from "./tool/suites/execute-suite";
 import { GetSuiteExecutionStatus } from "./tool/suites/get-suite-execution-status";
 import { ListSuiteExecutions } from "./tool/suites/list-suite-executions";
 import { ListSuites } from "./tool/suites/list-suites";
 import { GetTestStatus } from "./tool/tests/get-test-status";
+import { ListSegments } from "./tool/tests/list-segments";
 import { ListTests } from "./tool/tests/list-tests";
 import { RunTest } from "./tool/tests/run-test";
-import { AddPromptStep } from "./tool/recording/add-prompt-step";
-import { AddSegment } from "./tool/recording/add-segment";
-import { ConnectToSession } from "./tool/recording/connect-to-session";
-import { DeletePreviousStep } from "./tool/recording/delete-previous-step";
-import { GetScreenshot } from "./tool/recording/get-screenshot";
-import { ListSegments } from "./tool/tests/list-segments";
-import type { WebSocketManager } from "./websocket-manager";
 import type { TestPlatform } from "./types/common";
+import type { WebSocketManager } from "./websocket-manager";
 
 const ConfigurationSchema = z.object({
   api_token: z.string().describe("Reflect API authentication token"),
@@ -146,6 +148,14 @@ export class ReflectClient implements Client {
 
     for (const tool of tools) {
       register(tool.specification, tool.handle);
+    }
+  }
+
+  registerPrompts(register: RegisterPromptFunction): void {
+    const prompts = [new SapTest(this)];
+
+    for (const prompt of prompts) {
+      register(prompt.name, prompt.params, prompt.callback);
     }
   }
 }

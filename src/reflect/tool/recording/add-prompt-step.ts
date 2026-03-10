@@ -5,7 +5,7 @@ import { z } from "zod";
 import { Tool, ToolError } from "../../../common/tools";
 import type { ToolParams } from "../../../common/types";
 import type { ReflectClient } from "../../client";
-import { MCPAddPromptStepSuccessResponse } from "../../types/mcp";
+import type { MCPAddPromptStepSuccessResponse } from "../../types/mcp";
 
 export class AddPromptStep extends Tool<ReflectClient> {
   specification: ToolParams = {
@@ -24,10 +24,13 @@ export class AddPromptStep extends Tool<ReflectClient> {
       {
         name: "prompt",
         type: z.string(),
-        description: `The natural prompt describing the test step. The prompt should describe a single action, assertion, or query. 
-The prompt can only contain literal text; it cannot contain template variables, secrets, or other dynamic syntax. If we're in a Web recording,
-the prompt can perform browser navigation (e.g. "Click on the back button", "Navigate to https://www.example.com") and use the tab and enter keys
-to navigate (e.g. "Press the tab key", "Press the enter key").`,
+        description:
+          "The natural language prompt describing the test step. The prompt " +
+          "should describe a single action, assertion, or query. The prompt can only contain literal " +
+          "text; it cannot contain template variables, secrets, or other dynamic syntax. If we are in a " +
+          'Web recording, the prompt can perform browser navigation (e.g. "Click on the back button", ' +
+          '"Navigate to https://www.example.com") and use the tab and enter keys to navigate (e.g. ' +
+          '"Press the tab key", "Press the enter key").',
         required: true,
       },
     ],
