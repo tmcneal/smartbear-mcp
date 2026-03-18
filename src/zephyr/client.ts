@@ -10,6 +10,7 @@ import { GetEnvironments } from "./tool/environment/get-environments";
 import { CreateFolder } from "./tool/folder/create-folder";
 import { GetTestCases as GetIssueLinkTestCases } from "./tool/issue-link/get-test-cases";
 import { GetTestCycles as GetIssueLinkTestCycles } from "./tool/issue-link/get-test-cycles";
+import { GetTestExecutions as GetIssueLinkTestExecutions } from "./tool/issue-link/get-test-executions.ts";
 import { GetPriorities } from "./tool/priority/get-priorities";
 import { GetProject } from "./tool/project/get-project";
 import { GetProjects } from "./tool/project/get-projects";
@@ -118,6 +119,7 @@ export class ZephyrClient implements Client {
       new CreateTestCycleWebLink(this),
       new GetTestExecutionSteps(this),
       new GetTestExecutionLinks(this),
+      new GetIssueLinkTestExecutions(this),
     ];
 
     for (const tool of tools) {
