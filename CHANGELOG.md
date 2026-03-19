@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- [Reflect] Added `list_segments` tool: Lists the reusable test steps in the account, and includes some relevant metadata about each segment to help the Agent understand when a segment could be used as part of accomplishing a task. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+- [Reflect] Added `connect_to_session` tool: Establishes a WebSocket connection to a live Reflect test recording session. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+- [Reflect] Added `add_prompt_step` tool: Adds a natural language instruction to the test. This could be a single action, assertion, or query. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+- [Reflect] Added `get_screenshot` tool: Returns a screenshot of the current browser window (Web) or device (Mobile). The Agent is instructed to analyze the screenshot to determine the current state of the page and to decide what to do next to complete its assigned task. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+- [Reflect] Added `delete_previous_step`: Performs an "undo" on a step or segment that was previously added. The Agent is instructed to use this tool when a step or segment that it has added has failed or did not perform the task as intended. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+- [Reflect] Added `add_segment` tool: Adds an existing set of reusable test steps to the test. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+- [Reflect] Updated "instructions" with guidance to the Agent on how to properly construct a Reflect test. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+- [Reflect] Added a "reflect-sap-test" skill that includes additional guidance for the Agent when creating tests for SAP. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
+
+### Changed
+
 ## [0.15.0] - 2026-03-18
 
 ### Added
@@ -27,14 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Zephyr] Added a tool `get-test-cycles` for fetching Test Cycles linked to a Jira issue [#374](https://github.com/SmartBear/smartbear-mcp/pull/374)
 - [Zephyr] Added a tool 'get-test-execution-links' for fetching links associated with given Test Execution [#376](https://github.com/SmartBear/smartbear-mcp/pull/376)
 - [Zephyr] Added a tool 'get-test-executions' for fetching Test Executions associated with given Issue [#378](https://github.com/SmartBear/smartbear-mcp/pull/378)
-- [Reflect] Added `list_segments` tool: Lists the reusable test steps in the account, and includes some relevant metadata about each segment to help the Agent understand when a segment could be used as part of accomplishing a task. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
-- [Reflect] Added `connect_to_session` tool: Establishes a WebSocket connection to a live Reflect test recording session. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
-- [Reflect] Added `add_prompt_step` tool: Adds a natural language instruction to the test. This could be a single action, assertion, or query. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
-- [Reflect] Added `get_screenshot` tool: Returns a screenshot of the current browser window (Web) or device (Mobile). The Agent is instructed to analyze the screenshot to determine the current state of the page and to decide what to do next to complete its assigned task. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
-- [Reflect] Added `delete_previous_step`: Performs an "undo" on a step or segment that was previously added. The Agent is instructed to use this tool when a step or segment that it has added has failed or did not perform the task as intended. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
-- [Reflect] Added `add_segment` tool: Adds an existing set of reusable test steps to the test. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
-- [Reflect] Updated "instructions" with guidance to the Agent on how to properly construct a Reflect test. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
-- [Reflect] Added a "reflect-sap-test" skill that includes additional guidance for the Agent when creating tests for SAP. [#369](https://github.com/SmartBear/smartbear-mcp/pull/369)
 
 ### Changed
 
